@@ -2,6 +2,7 @@ package com.example.springsecuritydemo.config;
 
 import com.example.springsecuritydemo.filter.JwtAuthenticationEntryPoint;
 import com.example.springsecuritydemo.filter.JwtFilter;
+import com.example.springsecuritydemo.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

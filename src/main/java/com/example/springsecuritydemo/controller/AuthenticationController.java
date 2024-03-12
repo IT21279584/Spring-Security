@@ -25,6 +25,7 @@ public class AuthenticationController {
 
     // Generate a secure random key with sufficient size for HS256 algorithm
     SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private static final String SECRET_KEY = "hansakajayawarnasudusinghehansakajayawarnasudusinghe";
 
     // Convert the key to a Base64-encoded string for storage or transmission
     String encodedKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
@@ -53,8 +54,11 @@ public class AuthenticationController {
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + 864000000)) // Token validity: 10 days
-                .signWith(secretKey)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
+
+        System.out.println("Generated Token: " + token);
+        System.out.println("SecretKey : " + SECRET_KEY);
 
         return token;
     }

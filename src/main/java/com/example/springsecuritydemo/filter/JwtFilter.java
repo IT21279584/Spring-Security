@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,13 +41,14 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-            try {
-                // Generate a secure key
-                Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-                username = Jwts.parser().setSigningKey(key).parseClaimsJws(jwt).getBody().getSubject();
-            } catch (ExpiredJwtException e) {
-                // Handle expired token
-            }
+            username = jwtUtil.extractUsername(jwt);
+//            try {
+//                // Generate a secure key
+////                Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+////                username = Jwts.parser().setSigningKey(key).parseClaimsJws(jwt).getBody().getSubject();
+//            } catch (ExpiredJwtException e) {
+//                // Handle expired token
+//            }
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
