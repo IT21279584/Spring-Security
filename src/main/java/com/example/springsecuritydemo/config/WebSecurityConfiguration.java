@@ -36,9 +36,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/").authenticated()
                 .antMatchers("/authenticate").permitAll()
-                .antMatchers("/home").authenticated() // Require authentication for /home
-                .anyRequest().permitAll() // Allow access to other endpoints without authentication
+                .antMatchers("/home").hasAuthority("USER")
+                .antMatchers("/admin").hasAuthority("ADMIN") // Require authentication for /home
+                .anyRequest().authenticated() // Allow access to other endpoints without authentication
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
