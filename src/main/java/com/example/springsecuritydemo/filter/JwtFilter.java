@@ -3,6 +3,8 @@ package com.example.springsecuritydemo.filter;
 import com.example.springsecuritydemo.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Key;
 
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -38,7 +41,9 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             try {
-                username = Jwts.parser().setSigningKey("12345").parseClaimsJws(jwt).getBody().getSubject();
+                // Generate a secure key
+                Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+                username = Jwts.parser().setSigningKey(key).parseClaimsJws(jwt).getBody().getSubject();
             } catch (ExpiredJwtException e) {
                 // Handle expired token
             }
