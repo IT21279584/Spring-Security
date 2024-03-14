@@ -2,6 +2,7 @@ package com.example.springsecuritydemo.config;
 
 import com.example.springsecuritydemo.filter.JwtAuthenticationEntryPoint;
 import com.example.springsecuritydemo.filter.JwtFilter;
+import com.example.springsecuritydemo.service.CustomUserDetailsService;
 import com.example.springsecuritydemo.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +41,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/authenticate").permitAll()
                 .antMatchers("/home").hasAuthority("USER")
                 .antMatchers("/admin").hasAuthority("ADMIN") // Require authentication for /home
+                .antMatchers("/register").permitAll()
                 .anyRequest().authenticated() // Allow access to other endpoints without authentication
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
