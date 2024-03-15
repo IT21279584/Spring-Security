@@ -3,6 +3,7 @@ package com.example.springsecuritydemo.controller;
 import com.example.springsecuritydemo.model.AuthenticationRequest;
 import com.example.springsecuritydemo.model.Teacher;
 import com.example.springsecuritydemo.repository.UserRepository;
+import com.example.springsecuritydemo.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/register")
 public class RegistrationController {
 
+//    @Autowired
+//    private UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    private TeacherService teacherService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -32,6 +36,6 @@ public class RegistrationController {
 
         Teacher user = new Teacher(id, username ,encrptedPassword, role);
 
-        return userRepository.save(user);
+        return teacherService.saveTeacher(user);
     }
 }
