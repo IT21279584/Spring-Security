@@ -1,5 +1,6 @@
-package com.example.springsecuritydemo.config;
+package com.example.springsecuritydemo.service;
 
+import com.example.springsecuritydemo.config.CustomUserDetails;
 import com.example.springsecuritydemo.model.Teacher;
 import com.example.springsecuritydemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
