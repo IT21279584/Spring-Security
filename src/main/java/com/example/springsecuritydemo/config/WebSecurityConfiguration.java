@@ -42,7 +42,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home").hasAuthority("USER")
                 .antMatchers("/admin").hasAuthority("ADMIN") // Require authentication for /home
                 .antMatchers("/register").permitAll()
-                .anyRequest().authenticated() // Allow access to other endpoints without authentication
+               // .anyRequest().authenticated() // Allow access to other endpoints without authentication
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()

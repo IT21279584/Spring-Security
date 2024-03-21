@@ -37,6 +37,7 @@ public class AuthenticationController {
         this.userDetailsService = userDetailsService;
     }
 
+
     @PostMapping("/authenticate")
     public String authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
         Authentication authentication = authenticationManager.authenticate(
